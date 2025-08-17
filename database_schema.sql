@@ -233,6 +233,11 @@ INSERT INTO games (casino_id, name, game_type, rating) VALUES
 (4, 'Demo Slots', 'slots', 4.2),
 (4, 'Demo Roulette', 'roulette', 4.0);
 
+-- Insert sample bonuses
+INSERT INTO bonuses (casino_id, type, title, description, bonus_amount, bonus_percentage, free_spins, wagering_requirement, min_deposit, max_bonus, bonus_code, terms_conditions, valid_from, valid_until, status, featured) VALUES
+(1, 'welcome', 'Gold Rush Welcome Bonus', '100% match up to $500 plus 50 free spins', 500.00, 100.00, 50, 35.00, 20.00, 500.00, 'GOLD500', 'Standard terms apply', '2025-01-01', '2025-12-31', 'active', TRUE),
+(4, 'no_deposit', 'Demo Casino No Deposit', '$10 free credit for new players', 10.00, 0.00, 0, 0.00, NULL, 10.00, NULL, 'No wagering requirements for cashout', '2025-01-01', '2025-06-30', 'active', FALSE);
+
 -- Insert sample categories
 INSERT INTO categories (name, slug, description, icon, sort_order) VALUES
 ('Top Rated', 'top-rated', 'Highest rated casinos based on our expert reviews', 'fas fa-star', 1),
