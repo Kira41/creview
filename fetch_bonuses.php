@@ -9,8 +9,20 @@ header('Content-Type: application/json');
 
 try {
     $db = Database::getInstance()->getConnection();
+    // Pagination parameters
+    $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
+    $limit  = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : CASINOS_PER_PAGE;
 
-    $stmt = $db->query("SELECT b.id, b.type, b.title, b.bonus_amount, b.bonus_percentage, b.free_spins, b.wagering_requirement, b.bonus_code, b.valid_until, c.logo, c.rating FROM bonuses b JOIN casinos c ON b.casino_id = c.id WHERE b.status = 'active' ORDER BY b.id");
+    // Fetch total active bonuses count
+    $countStmt = $db->query("SELECT COUNT(*) FROM bonuses WHERE status = 'active'");
+    $totalCount = (int) $countStmt->fetchColumn();
+
+    // Fetch active bonuses with pagination
+    $stmt = $db->prepare("SELECT b.id, b.type, b.title, b.bonus_amount, b.bonus_percentage, b.free_spins, b.wagering_requirement, b.bonus_code, b.valid_until, c.logo, c.rating FROM bonuses b JOIN casinos c ON b.casino_id = c.id WHERE b.status = 'active' ORDER BY b.id LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+
     $bonuses = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $parts = [];
@@ -27,7 +39,12 @@ try {
         $bonuses[] = $row;
     }
 
-    echo json_encode(['bonuses' => $bonuses]);
+    echo json_encode([
+        'bonuses'   => $bonuses,
+        'totalCount'=> $totalCount,
+        'hasMore'   => ($offset + count($bonuses) < $totalCount),
+        'perPage'   => $limit
+    ]);
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error']);
