@@ -59,6 +59,7 @@ function initFilters() {
     const sortSelect = document.getElementById('sort-select');
     const ratingFilter = document.getElementById('rating-filter');
     const typeFilter = document.getElementById('type-filter');
+    const paymentFilter = document.getElementById('payment-filter');
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.querySelector('.search-btn');
     
@@ -66,6 +67,7 @@ function initFilters() {
     if (sortSelect) sortSelect.addEventListener('change', applyFilters);
     if (ratingFilter) ratingFilter.addEventListener('change', applyFilters);
     if (typeFilter) typeFilter.addEventListener('change', applyFilters);
+    if (paymentFilter) paymentFilter.addEventListener('change', applyFilters);
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 300));
         searchInput.addEventListener('keypress', function(e) {
@@ -82,6 +84,7 @@ function applyFilters() {
     const sortValue = document.getElementById('sort-select')?.value || 'rating';
     const ratingValue = parseFloat(document.getElementById('rating-filter')?.value || 0);
     const typeValue = document.getElementById('type-filter')?.value || 'all';
+    const paymentValue = document.getElementById('payment-filter')?.value || 'all';
     const searchValue = document.getElementById('search-input')?.value.toLowerCase() || '';
     
     const casinoCards = document.querySelectorAll('.casino-card');
@@ -91,13 +94,15 @@ function applyFilters() {
         const rating = parseFloat(card.dataset.rating || 0);
         const type = card.dataset.type || '';
         const name = card.dataset.name?.toLowerCase() || '';
-        
+        const payments = card.dataset.paymentMethods?.split(',') || [];
+
         // Apply filters
         const matchesRating = rating >= ratingValue;
         const matchesType = typeValue === 'all' || type === typeValue;
+        const matchesPayment = paymentValue === 'all' || payments.includes(paymentValue);
         const matchesSearch = searchValue === '' || name.includes(searchValue);
-        
-        if (matchesRating && matchesType && matchesSearch) {
+
+        if (matchesRating && matchesType && matchesPayment && matchesSearch) {
             card.style.display = 'block';
             card.classList.add('fade-in');
             visibleCards.push({
@@ -123,6 +128,7 @@ function applyFilters() {
             sort: sortValue,
             rating: ratingValue,
             type: typeValue,
+            payment: paymentValue,
             search: searchValue
         });
     }
@@ -286,6 +292,7 @@ function createCasinoCard(data) {
     card.dataset.rating = data.rating;
     card.dataset.type = data.type;
     card.dataset.name = data.name;
+    card.dataset.paymentMethods = Array.isArray(data.payment_methods) ? data.payment_methods.join(',') : '';
 
     const ratingClass = data.rating >= 4.5 ? 'excellent' : data.rating >= 4.0 ? 'good' : 'fair';
     const ratingLabel = data.rating >= 4.5 ? 'Excellent' : data.rating >= 4.0 ? 'Good' : 'Fair';
