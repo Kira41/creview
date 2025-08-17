@@ -308,4 +308,3 @@ BEGIN
     RETURN IFNULL(casino_rank, 0);
 END //
 DELIMITER ;
-
