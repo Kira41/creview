@@ -10,7 +10,7 @@ CREATE TABLE casinos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
-    type ENUM('online', 'sweepstakes', 'crypto', 'live') NOT NULL DEFAULT 'online',
+    casino_type ENUM('online', 'sweepstakes', 'crypto', 'live') NOT NULL DEFAULT 'online',
     rating DECIMAL(2,1) NOT NULL DEFAULT 0.0,
     bonus TEXT,
     bonus_value DECIMAL(10,2) DEFAULT 0.00,
@@ -39,7 +39,7 @@ CREATE TABLE casinos (
     
     INDEX idx_status (status),
     INDEX idx_rating (rating),
-    INDEX idx_type (type),
+    INDEX idx_casino_type (casino_type),
     INDEX idx_featured (featured),
     INDEX idx_sort_order (sort_order)
 );
@@ -70,6 +70,23 @@ CREATE TABLE reviews (
     FOREIGN KEY (casino_id) REFERENCES casinos(id) ON DELETE CASCADE,
     INDEX idx_casino_id (casino_id),
     INDEX idx_status (status),
+    INDEX idx_rating (rating)
+);
+
+-- Games table - stores casino games offered by each casino
+CREATE TABLE games (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    casino_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    game_type ENUM('slots', 'roulette', 'blackjack', 'keno', 'other') NOT NULL DEFAULT 'other',
+    rating DECIMAL(2,1) NOT NULL DEFAULT 0.0,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (casino_id) REFERENCES casinos(id) ON DELETE CASCADE,
+    INDEX idx_casino_id (casino_id),
+    INDEX idx_game_type (game_type),
     INDEX idx_rating (rating)
 );
 
@@ -172,7 +189,7 @@ CREATE TABLE page_views (
 );
 
 -- Insert sample data
-INSERT INTO casinos (name, slug, type, rating, bonus, features, description, logo, status, featured) VALUES
+INSERT INTO casinos (name, slug, casino_type, rating, bonus, features, description, logo, status, featured) VALUES
 ('Crown Coins', 'crown-coins', 'sweepstakes', 4.9, 'Get 200% More Coins on First Purchase - 1.5 Million CC + 75 SC', 
  '["24/7 support, unlike most competitors", "Only sweeps site with 4.7★ iOS app", "Offers Relax Gaming, Pragmatic Play"]',
  'Crown Coins Casino stands out as one of the premier sweepstakes casinos in the market, offering an exceptional gaming experience with a focus on player satisfaction and security.',
@@ -184,9 +201,17 @@ INSERT INTO casinos (name, slug, type, rating, bonus, features, description, log
  'https://via.placeholder.com/120x60/2196F3/white?text=Stake', 'active', TRUE),
 
 ('Jackpota', 'jackpota', 'online', 4.6, '80,000 Gold Coins + 40 Sweeps Coins and 75 Free Spins',
- '["A 200M jackpot on every game", "Get 1,500 free gold coins daily", "Enjoy 700+ exciting games"]',
- 'Jackpota provides an exciting gaming environment with massive jackpots and daily rewards.',
- 'https://via.placeholder.com/120x60/FF9800/white?text=Jackpota', 'active', TRUE);
+'["A 200M jackpot on every game", "Get 1,500 free gold coins daily", "Enjoy 700+ exciting games"]',
+'Jackpota provides an exciting gaming environment with massive jackpots and daily rewards.',
+'https://via.placeholder.com/120x60/FF9800/white?text=Jackpota', 'active', TRUE);
+
+-- Insert sample games
+INSERT INTO games (casino_id, name, game_type, rating) VALUES
+(1, 'Online slots', 'slots', 4.5),
+(1, 'Online roulette', 'roulette', 4.2),
+(1, 'Online blackjack', 'blackjack', 4.0),
+(1, 'Online keno', 'keno', 3.8),
+(1, 'All casino games', 'other', 4.3);
 
 -- Insert sample categories
 INSERT INTO categories (name, slug, description, icon, sort_order) VALUES
