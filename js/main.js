@@ -44,26 +44,10 @@ function initMobileNav() {
             });
         });
         
-        // Close menu when clicking on non-dropdown links
+        // Close menu when clicking links
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const isDropdownToggle = link.classList.contains('dropdown-toggle');
-                if (isDropdownToggle) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        link.parentElement.classList.toggle('open');
-                    }
-                } else {
-                    navMenu.classList.remove('active');
-                }
-            });
-        });
-
-        // Close menu when clicking dropdown items
-        const dropdownLinks = document.querySelectorAll('.dropdown-link');
-        dropdownLinks.forEach(item => {
-            item.addEventListener('click', () => {
+            link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
             });
         });
