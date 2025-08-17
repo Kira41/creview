@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Reviews - Trusted & Independent Online Casino Reviews</title>
+    <meta name="description" content="Expert reviews and ratings of online casinos. Find the best casino bonuses, games, and secure gambling sites.">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <i class="fas fa-dice"></i>
+                        <span>CasinoReviews</span>
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Online Casinos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Sweepstakes Casinos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Bonuses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin/" class="nav-link admin-link">Admin</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Expert Reviews and Ratings of Online Casinos</h1>
+                <p class="hero-description">
+                    Our team of experts personally test and review online casinos, ensuring trustworthy analysis of 
+                    games, bonuses, mobile experience, and more. Find the best online casino reviews for 2025.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="total-casinos">150+</span>
+                        <span class="stat-label">Casinos Reviewed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">25</span>
+                        <span class="stat-label">Review Criteria</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">30</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" class="filter-select">
+                        <option value="rating">Highest Rated</option>
+                        <option value="newest">Newest Reviews</option>
+                        <option value="bonus">Best Bonus</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="rating-filter">Minimum Rating:</label>
+                    <select id="rating-filter" class="filter-select">
+                        <option value="0">All Ratings</option>
+                        <option value="4.5">4.5+ Stars</option>
+                        <option value="4.0">4.0+ Stars</option>
+                        <option value="3.5">3.5+ Stars</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="type-filter">Casino Type:</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="online">Online Casino</option>
+                        <option value="sweepstakes">Sweepstakes</option>
+                        <option value="crypto">Crypto Casino</option>
+                    </select>
+                </div>
+                
+                <div class="search-group">
+                    <input type="text" id="search-input" placeholder="Search casinos..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casino Grid -->
+    <section class="casino-grid">
+        <div class="container">
+            <div class="grid-header">
+                <h2>Top Rated Online Casinos</h2>
+                <p>Our expert team has reviewed and rated these casinos based on our comprehensive 25-step process.</p>
+            </div>
+            
+            <div class="casinos-container" id="casinos-container">
+                <!-- Sample Casino Cards for Demo -->
+                <div class="casino-card" data-rating="4.9" data-type="online" data-name="Crown Coins">
+                    <div class="casino-header">
+                        <div class="casino-logo">
+                            <img src="https://via.placeholder.com/120x60/4CAF50/white?text=Crown+Coins" alt="Crown Coins">
+                        </div>
+                        <div class="casino-rating">
+                            <span class="rating-badge excellent">4.9</span>
+                            <span class="rating-label">Excellent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="casino-content">
+                        <h3 class="casino-name">Crown Coins</h3>
+                        <div class="casino-bonus">
+                            <span class="bonus-text">Get 200% More Coins on First Purchase</span>
+                        </div>
+                        
+                        <ul class="casino-features">
+                            <li><i class="fas fa-check"></i> 24/7 support, unlike most competitors</li>
+                            <li><i class="fas fa-check"></i> Only sweeps site with 4.7★ iOS app</li>
+                            <li><i class="fas fa-check"></i> Offers Relax Gaming, Pragmatic Play</li>
+                        </ul>
+                        
+                        <div class="casino-actions">
+                            <a href="casino-detail.html?id=1" class="btn btn-primary">Read Review</a>
+                            <a href="#" class="btn btn-secondary">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="casino-card" data-rating="4.7" data-type="sweepstakes" data-name="Stake">
+                    <div class="casino-header">
+                        <div class="casino-logo">
+                            <img src="https://via.placeholder.com/120x60/2196F3/white?text=Stake" alt="Stake">
+                        </div>
+                        <div class="casino-rating">
+                            <span class="rating-badge excellent">4.7</span>
+                            <span class="rating-label">Excellent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="casino-content">
+                        <h3 class="casino-name">Stake</h3>
+                        <div class="casino-bonus">
+                            <span class="bonus-text">Up to 560,000 GC, $56 Stake Cash + 5% Rakeback</span>
+                        </div>
+                        
+                        <ul class="casino-features">
+                            <li><i class="fas fa-check"></i> Exclusive promo code: CASINOORG</li>
+                            <li><i class="fas fa-check"></i> 3,000+ games inc. Stake originals</li>
+                            <li><i class="fas fa-check"></i> Weekly slots battles for 50M GC</li>
+                        </ul>
+                        
+                        <div class="casino-actions">
+                            <a href="casino-detail.html?id=2" class="btn btn-primary">Read Review</a>
+                            <a href="#" class="btn btn-secondary">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="casino-card" data-rating="4.6" data-type="online" data-name="Jackpota">
+                    <div class="casino-header">
+                        <div class="casino-logo">
+                            <img src="https://via.placeholder.com/120x60/FF9800/white?text=Jackpota" alt="Jackpota">
+                        </div>
+                        <div class="casino-rating">
+                            <span class="rating-badge excellent">4.6</span>
+                            <span class="rating-label">Excellent</span>
+                        </div>
+                    </div>
+                    
+                    <div class="casino-content">
+                        <h3 class="casino-name">Jackpota</h3>
+                        <div class="casino-bonus">
+                            <span class="bonus-text">80,000 Gold Coins + 40 Sweeps Coins and 75 Free Spins</span>
+                        </div>
+                        
+                        <ul class="casino-features">
+                            <li><i class="fas fa-check"></i> A 200M jackpot on every game</li>
+                            <li><i class="fas fa-check"></i> Get 1,500 free gold coins daily</li>
+                            <li><i class="fas fa-check"></i> Enjoy 700+ exciting games</li>
+                        </ul>
+                        
+                        <div class="casino-actions">
+                            <a href="casino-detail.html?id=3" class="btn btn-primary">Read Review</a>
+                            <a href="#" class="btn btn-secondary">Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more-container">
+                <button class="load-more-btn" id="load-more-btn">
+                    <i class="fas fa-plus"></i>
+                    Load More Casinos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Review Process Section -->
+    <section class="review-process">
+        <div class="container">
+            <h2>How We Review Casinos</h2>
+            <div class="process-grid">
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security & Trust</h3>
+                    <p>We verify SSL encryption, licensing, and security measures to ensure your safety.</p>
+                </div>
+                
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Games & Software</h3>
+                    <p>Testing game variety, quality, and software providers for the best gaming experience.</p>
+                </div>
+                
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Bonuses & Promotions</h3>
+                    <p>Analyzing welcome offers, wagering requirements, and ongoing promotions.</p>
+                </div>
+                
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Banking & Payments</h3>
+                    <p>Reviewing deposit methods, withdrawal speeds, and transaction security.</p>
+                </div>
+                
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Customer Support</h3>
+                    <p>Testing response times, availability, and quality of customer service.</p>
+                </div>
+                
+                <div class="process-item">
+                    <div class="process-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Experience</h3>
+                    <p>Evaluating mobile optimization, app quality, and touch interface design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CasinoReviews</h3>
+                    <p>Your trusted source for independent online casino reviews and ratings.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Best Online Casinos</a></li>
+                        <li><a href="#">Casino Bonuses</a></li>
+                        <li><a href="#">Free Games</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">How We Review</a></li>
+                        <li><a href="#">Responsible Gambling</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 CasinoReviews. All rights reserved. | 18+ Only | Gamble Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
