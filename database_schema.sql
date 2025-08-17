@@ -8,7 +8,7 @@ DROP PROCEDURE IF EXISTS UpdateCasinoRating;
 DROP FUNCTION IF EXISTS GetCasinoRank;
 DROP TABLE IF EXISTS page_views;
 DROP TABLE IF EXISTS site_settings;
-DROP TABLE IF EXISTS admin_users;
+DROP TABLE IF EXISTS admin_usr;
 DROP TABLE IF EXISTS bonuses;
 DROP TABLE IF EXISTS casino_categories;
 DROP TABLE IF EXISTS categories;
@@ -155,7 +155,7 @@ CREATE TABLE bonuses (
 );
 
 -- Admin users table
-CREATE TABLE admin_users (
+CREATE TABLE admin_usr (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
