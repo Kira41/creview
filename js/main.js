@@ -331,6 +331,82 @@ function createCasinoCard(data) {
     return card;
 }
 
+function createBonusCard(data) {
+    const card = document.createElement('div');
+    card.className = 'casino-card fade-in';
+    card.dataset.type = data.type || '';
+    card.dataset.name = data.title || '';
+    card.dataset.rating = data.rating || 0;
+
+    const ratingClass = data.rating >= 4.5 ? 'excellent' : data.rating >= 4.0 ? 'good' : 'fair';
+    const ratingLabel = data.rating >= 4.5 ? 'Excellent' : data.rating >= 4.0 ? 'Good' : 'Fair';
+    const logoUrl = data.logo ? data.logo : `https://via.placeholder.com/120x60/4CAF50/white?text=${encodeURIComponent(data.title)}`;
+
+    card.innerHTML = `
+        <div class="casino-header">
+            <div class="casino-logo">
+                <img src="${logoUrl}" alt="${data.title}">
+            </div>
+            <div class="casino-rating">
+                <span class="rating-badge ${ratingClass}">${data.rating}</span>
+                <span class="rating-label">${ratingLabel}</span>
+            </div>
+        </div>
+        <div class="casino-content">
+            <h3 class="casino-name">${data.title}</h3>
+            <div class="casino-bonus">
+                <span class="bonus-text">${data.bonus_text || ''}</span>
+            </div>
+            <ul class="casino-features">
+                ${data.wagering_requirement ? `<li><i class="fas fa-check"></i> Wagering ${data.wagering_requirement}</li>` : ''}
+                ${data.bonus_code ? `<li><i class="fas fa-check"></i> Bonus Code: ${data.bonus_code}</li>` : ''}
+                ${data.valid_until ? `<li><i class="fas fa-check"></i> Valid through ${data.valid_until}</li>` : ''}
+            </ul>
+            <div class="casino-actions">
+                <a href="#" class="btn btn-primary">Claim Bonus</a>
+                <a href="#" class="btn btn-secondary">Visit Site</a>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+function createGameCard(data) {
+    const card = document.createElement('div');
+    card.className = 'casino-card fade-in';
+    card.dataset.type = data.game_type || '';
+    card.dataset.name = data.name || '';
+    card.dataset.rating = data.rating || 0;
+
+    const ratingClass = data.rating >= 4.5 ? 'excellent' : data.rating >= 4.0 ? 'good' : 'fair';
+    const ratingLabel = data.rating >= 4.5 ? 'Excellent' : data.rating >= 4.0 ? 'Good' : 'Fair';
+    const logoUrl = `https://via.placeholder.com/120x60/4CAF50/white?text=${encodeURIComponent(data.name)}`;
+
+    card.innerHTML = `
+        <div class="casino-header">
+            <div class="casino-logo">
+                <img src="${logoUrl}" alt="${data.name}">
+            </div>
+            <div class="casino-rating">
+                <span class="rating-badge ${ratingClass}">${data.rating}</span>
+                <span class="rating-label">${ratingLabel}</span>
+            </div>
+        </div>
+        <div class="casino-content">
+            <h3 class="casino-name">${data.name}</h3>
+            <div class="casino-bonus">
+                <span class="bonus-text">Type: ${data.game_type}</span>
+            </div>
+            <div class="casino-actions">
+                <a href="#" class="btn btn-primary">Play Now</a>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
 // Smooth Scrolling
 function initSmoothScrolling() {
     const links = document.querySelectorAll('a[href^="#"]');
@@ -371,19 +447,48 @@ function initPHPIntegration() {
     // Set up AJAX endpoints for PHP communication
     setupAjaxEndpoints();
 
-    // Fetch casino and game data from backend
-    fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.perPage) {
-                casinosPerPage = parseInt(data.perPage);
-            }
-            loadPHPCasinoData(data);
-            if (data.games) {
-                populateGames(data.games);
-            }
-        })
-        .catch(error => console.error('Failed to load casino data', error));
+    // Fetch casino data when container exists
+    const casinoContainer = document.getElementById('casinos-container');
+    if (casinoContainer) {
+        fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.perPage) {
+                    casinosPerPage = parseInt(data.perPage);
+                }
+                loadPHPCasinoData(data);
+                if (data.games) {
+                    populateGames(data.games);
+                }
+            })
+            .catch(error => console.error('Failed to load casino data', error));
+    }
+
+    // Fetch bonuses data when container exists
+    const bonusContainer = document.getElementById('bonuses-container');
+    if (bonusContainer) {
+        fetch('fetch_bonuses.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.bonuses) {
+                    populateBonuses(data.bonuses);
+                }
+            })
+            .catch(error => console.error('Failed to load bonus data', error));
+    }
+
+    // Fetch games list when container exists
+    const gamesContainer = document.getElementById('games-container');
+    if (gamesContainer) {
+        fetch('fetch_games.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.games) {
+                    populateGameCards(data.games);
+                }
+            })
+            .catch(error => console.error('Failed to load games data', error));
+    }
 }
 
 function updateCasinoData(casinoId, newData) {
@@ -459,6 +564,28 @@ function populateGames(games) {
             td.textContent = game.name;
             tr.appendChild(td);
             tbody.appendChild(tr);
+        });
+    }
+}
+
+function populateBonuses(bonuses) {
+    const container = document.getElementById('bonuses-container');
+    if (container) {
+        container.innerHTML = '';
+        bonuses.forEach(bonus => {
+            const card = createBonusCard(bonus);
+            container.appendChild(card);
+        });
+    }
+}
+
+function populateGameCards(games) {
+    const container = document.getElementById('games-container');
+    if (container) {
+        container.innerHTML = '';
+        games.forEach(game => {
+            const card = createGameCard(game);
+            container.appendChild(card);
         });
     }
 }
