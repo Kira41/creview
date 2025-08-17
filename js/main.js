@@ -331,7 +331,9 @@ function createCasinoCard(data) {
             </div>
             
             <ul class="casino-features">
-                ${data.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+                ${(
+                    Array.isArray(data.features) ? data.features : []
+                ).map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
             </ul>
             
             <div class="casino-actions">
