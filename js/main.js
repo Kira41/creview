@@ -236,10 +236,19 @@ function animateCounters() {
 // Load More Functionality
 function initLoadMore() {
     const loadMoreBtn = document.getElementById('load-more-btn');
-    
-    if (loadMoreBtn) {
+    if (!loadMoreBtn) return;
+
+    if (document.getElementById('casinos-container')) {
         loadMoreBtn.addEventListener('click', function() {
             loadMoreCasinos();
+        });
+    } else if (document.getElementById('games-container')) {
+        loadMoreBtn.addEventListener('click', function() {
+            loadMoreGames();
+        });
+    } else if (document.getElementById('bonuses-container')) {
+        loadMoreBtn.addEventListener('click', function() {
+            loadMoreBonuses();
         });
     }
 }
@@ -279,6 +288,80 @@ function loadMoreCasinos() {
             console.error('Failed to load more casinos', error);
             showAlert('Failed to load more casinos.');
             loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Casinos';
+            loadMoreBtn.disabled = false;
+        });
+}
+
+function loadMoreGames() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const container = document.getElementById('games-container');
+
+    if (!container || !loadMoreBtn) return;
+
+    const offset = container.children.length;
+
+    loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
+    loadMoreBtn.disabled = true;
+
+    fetch(`fetch_games.php?offset=${offset}&limit=${casinosPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.games && data.games.length > 0) {
+                data.games.forEach(game => {
+                    const card = createGameCard(game);
+                    container.appendChild(card);
+                });
+            }
+
+            if (data.hasMore) {
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Games';
+                loadMoreBtn.disabled = false;
+            } else {
+                showAlert('No more games to load.');
+                loadMoreBtn.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load more games', error);
+            showAlert('Failed to load more games.');
+            loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Games';
+            loadMoreBtn.disabled = false;
+        });
+}
+
+function loadMoreBonuses() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const container = document.getElementById('bonuses-container');
+
+    if (!container || !loadMoreBtn) return;
+
+    const offset = container.children.length;
+
+    loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
+    loadMoreBtn.disabled = true;
+
+    fetch(`fetch_bonuses.php?offset=${offset}&limit=${casinosPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.bonuses && data.bonuses.length > 0) {
+                data.bonuses.forEach(bonus => {
+                    const card = createBonusCard(bonus);
+                    container.appendChild(card);
+                });
+            }
+
+            if (data.hasMore) {
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Bonuses';
+                loadMoreBtn.disabled = false;
+            } else {
+                showAlert('No more bonuses to load.');
+                loadMoreBtn.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load more bonuses', error);
+            showAlert('Failed to load more bonuses.');
+            loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Bonuses';
             loadMoreBtn.disabled = false;
         });
 }
@@ -467,9 +550,12 @@ function initPHPIntegration() {
     // Fetch bonuses data when container exists
     const bonusContainer = document.getElementById('bonuses-container');
     if (bonusContainer) {
-        fetch('fetch_bonuses.php')
+        fetch(`fetch_bonuses.php?offset=0&limit=${casinosPerPage}`)
             .then(response => response.json())
             .then(data => {
+                if (data.perPage) {
+                    casinosPerPage = parseInt(data.perPage);
+                }
                 if (data.bonuses) {
                     populateBonuses(data.bonuses);
                 }
@@ -480,9 +566,12 @@ function initPHPIntegration() {
     // Fetch games list when container exists
     const gamesContainer = document.getElementById('games-container');
     if (gamesContainer) {
-        fetch('fetch_games.php')
+        fetch(`fetch_games.php?offset=0&limit=${casinosPerPage}`)
             .then(response => response.json())
             .then(data => {
+                if (data.perPage) {
+                    casinosPerPage = parseInt(data.perPage);
+                }
                 if (data.games) {
                     populateGameCards(data.games);
                 }
