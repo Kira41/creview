@@ -10,6 +10,11 @@ define('DB_USER', 'your_username');
 define('DB_PASS', 'your_password');
 define('DB_CHARSET', 'utf8mb4');
 
+// Environment Configuration
+// Set to 0 for local XAMPP connection (no username/password)
+// Set to 1 for online connection using DB_USER and DB_PASS
+$online = 0;
+
 // Site Configuration
 define('SITE_NAME', 'CasinoReviews');
 define('SITE_URL', 'https://yoursite.com');
@@ -28,7 +33,14 @@ class Database {
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
-            $this->connection = new PDO($dsn, DB_USER, DB_PASS, $options);
+
+            global $online;
+            if ($online === 1) {
+                $this->connection = new PDO($dsn, DB_USER, DB_PASS, $options);
+            } else {
+                // Default XAMPP credentials (root with no password)
+                $this->connection = new PDO($dsn, 'root', '', $options);
+            }
         } catch (PDOException $e) {
             error_log("Database connection failed: " . $e->getMessage());
             throw new Exception("Database connection failed");
