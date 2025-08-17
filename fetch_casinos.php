@@ -19,7 +19,7 @@ try {
     $totalCount = (int) $countStmt->fetchColumn();
 
     // Fetch active casinos with pagination
-    $casinoStmt = $db->prepare("SELECT id, name, casino_type AS type, rating, bonus, features, description, logo FROM casinos WHERE status = 'active' ORDER BY id LIMIT :limit OFFSET :offset");
+    $casinoStmt = $db->prepare("SELECT id, name, casino_type AS type, rating, bonus, features, description, logo, payment_methods FROM casinos WHERE status = 'active' ORDER BY id LIMIT :limit OFFSET :offset");
     $casinoStmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $casinoStmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $casinoStmt->execute();
@@ -32,6 +32,13 @@ try {
             $casino['features'] = is_array($decoded) ? $decoded : [];
         } else {
             $casino['features'] = [];
+        }
+
+        if (isset($casino['payment_methods'])) {
+            $decoded = json_decode($casino['payment_methods'], true);
+            $casino['payment_methods'] = is_array($decoded) ? $decoded : [];
+        } else {
+            $casino['payment_methods'] = [];
         }
     }
     unset($casino);
