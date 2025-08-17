@@ -1,4 +1,5 @@
 // Casino Review Site JavaScript
+let casinosPerPage = 3;
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize the application
     initializeApp();
@@ -240,102 +241,79 @@ function initLoadMore() {
 function loadMoreCasinos() {
     const loadMoreBtn = document.getElementById('load-more-btn');
     const container = document.getElementById('casinos-container');
-    
-    if (!container) return;
-    
+
+    if (!container || !loadMoreBtn) return;
+
+    const offset = container.children.length;
+
     // Show loading state
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
-    
-    // Simulate API call or PHP request
-    setTimeout(() => {
-        // This would typically be replaced with actual PHP/AJAX call
-        const newCasinos = generateSampleCasinos(3);
-        
-        newCasinos.forEach(casino => {
-            container.appendChild(casino);
-        });
-        
-        // Reset button
-        loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Casinos';
-        loadMoreBtn.disabled = false;
-        
-        // Trigger PHP load more if available
-        if (window.phpLoadMore) {
-            window.phpLoadMore();
-        }
-    }, 1000);
-}
 
-function generateSampleCasinos(count) {
-    const sampleData = [
-        {
-            name: 'Lucky Spin',
-            rating: 4.5,
-            type: 'online',
-            bonus: '100% Match Bonus up to $500',
-            features: ['Live dealer games', 'Fast withdrawals', 'Mobile optimized']
-        },
-        {
-            name: 'Golden Palace',
-            rating: 4.3,
-            type: 'sweepstakes',
-            bonus: '50,000 Gold Coins + 25 Sweep Coins',
-            features: ['Daily bonuses', '500+ games', '24/7 support']
-        },
-        {
-            name: 'Royal Casino',
-            rating: 4.7,
-            type: 'crypto',
-            bonus: '200% Crypto Bonus + 50 Free Spins',
-            features: ['Crypto payments', 'Provably fair', 'Instant deposits']
-        }
-    ];
-    
-    const casinos = [];
-    
-    for (let i = 0; i < count; i++) {
-        const data = sampleData[i % sampleData.length];
-        const card = createCasinoCard(data);
-        casinos.push(card);
-    }
-    
-    return casinos;
+    fetch(`fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.casinos && data.casinos.length > 0) {
+                data.casinos.forEach(casino => {
+                    const card = createCasinoCard(casino);
+                    container.appendChild(card);
+                });
+                applyFilters();
+            }
+
+            if (data.hasMore) {
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Casinos';
+                loadMoreBtn.disabled = false;
+            } else {
+                showAlert('No more casinos to load.');
+                loadMoreBtn.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load more casinos', error);
+            showAlert('Failed to load more casinos.');
+            loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Casinos';
+            loadMoreBtn.disabled = false;
+        });
 }
 
 function createCasinoCard(data) {
     const card = document.createElement('div');
     card.className = 'casino-card fade-in';
+    if (data.id) {
+        card.dataset.casinoId = data.id;
+    }
     card.dataset.rating = data.rating;
     card.dataset.type = data.type;
     card.dataset.name = data.name;
-    
+
     const ratingClass = data.rating >= 4.5 ? 'excellent' : data.rating >= 4.0 ? 'good' : 'fair';
     const ratingLabel = data.rating >= 4.5 ? 'Excellent' : data.rating >= 4.0 ? 'Good' : 'Fair';
-    
+    const logoUrl = data.logo ? data.logo : `https://via.placeholder.com/120x60/4CAF50/white?text=${encodeURIComponent(data.name)}`;
+
     card.innerHTML = `
         <div class="casino-header">
             <div class="casino-logo">
-                <img src="https://via.placeholder.com/120x60/4CAF50/white?text=${encodeURIComponent(data.name)}" alt="${data.name}">
+                <img src="${logoUrl}" alt="${data.name}">
             </div>
             <div class="casino-rating">
                 <span class="rating-badge ${ratingClass}">${data.rating}</span>
                 <span class="rating-label">${ratingLabel}</span>
             </div>
         </div>
-        
+
         <div class="casino-content">
             <h3 class="casino-name">${data.name}</h3>
             <div class="casino-bonus">
                 <span class="bonus-text">${data.bonus}</span>
             </div>
-            
+
             <ul class="casino-features">
                 ${(
                     Array.isArray(data.features) ? data.features : []
                 ).map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
             </ul>
-            
+
             <div class="casino-actions">
                 <a href="casino-detail.html?name=${encodeURIComponent(data.name)}" class="btn btn-primary">Read Review</a>
                 <a href="#" class="btn btn-secondary">Visit Site</a>
@@ -387,9 +365,12 @@ function initPHPIntegration() {
     setupAjaxEndpoints();
 
     // Fetch casino and game data from backend
-    fetch('fetch_casinos.php')
+    fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}`)
         .then(response => response.json())
         .then(data => {
+            if (data.perPage) {
+                casinosPerPage = parseInt(data.perPage);
+            }
             loadPHPCasinoData(data);
             if (data.games) {
                 populateGames(data.games);
@@ -438,6 +419,9 @@ function removeCasino(casinoId) {
 
 function loadPHPCasinoData(data) {
     const container = document.getElementById('casinos-container');
+    if (data.perPage) {
+        casinosPerPage = parseInt(data.perPage);
+    }
     if (container && data.casinos) {
         // Clear existing sample data
         container.innerHTML = '';
@@ -527,14 +511,10 @@ function throttle(func, limit) {
     };
 }
 
-// Error Handling
-window.addEventListener('error', function(e) {
-    console.error('Casino Review App Error:', e.error);
-    
-    // Show user-friendly error message
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.style.cssText = `
+function showAlert(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'error-message';
+    alertDiv.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
@@ -545,13 +525,17 @@ window.addEventListener('error', function(e) {
         z-index: 10000;
         max-width: 300px;
     `;
-    errorDiv.textContent = 'An error occurred. Please refresh the page.';
-    
-    document.body.appendChild(errorDiv);
-    
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
     setTimeout(() => {
-        errorDiv.remove();
+        alertDiv.remove();
     }, 5000);
+}
+
+// Error Handling
+window.addEventListener('error', function(e) {
+    console.error('Casino Review App Error:', e.error);
+    showAlert('An error occurred. Please refresh the page.');
 });
 
 // Performance Monitoring
