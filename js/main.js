@@ -383,6 +383,17 @@ function initPHPIntegration() {
     
     // Set up AJAX endpoints for PHP communication
     setupAjaxEndpoints();
+
+    // Fetch casino and game data from backend
+    fetch('fetch_casinos.php')
+        .then(response => response.json())
+        .then(data => {
+            loadPHPCasinoData(data);
+            if (data.games) {
+                populateGames(data.games);
+            }
+        })
+        .catch(error => console.error('Failed to load casino data', error));
 }
 
 function updateCasinoData(casinoId, newData) {
@@ -442,6 +453,20 @@ function loadPHPCasinoData(data) {
                 totalElement.textContent = data.totalCount + '+';
             }
         }
+    }
+}
+
+function populateGames(games) {
+    const tbody = document.getElementById('games-table-body');
+    if (tbody) {
+        tbody.innerHTML = '';
+        games.forEach(game => {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.textContent = game.name;
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        });
     }
 }
 
