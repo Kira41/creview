@@ -18,14 +18,47 @@
         .rank-podium .first {
             font-size: 2rem;
             color: gold;
+            transform: translateY(-10px);
         }
         .rank-podium .second {
             font-size: 1.5rem;
             color: silver;
+            transform: translateY(5px);
         }
         .rank-podium .third {
             font-size: 1.25rem;
             color: #cd7f32;
+            transform: translateY(10px);
+        }
+
+        .casinos-container {
+            position: relative;
+        }
+
+        .casinos-container .casino-card {
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .casinos-container .casino-card:nth-child(2) {
+            transform: translateY(-15px);
+        }
+
+        .casinos-container .casino-card:nth-child(2)::before {
+            content: "\f005";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: gold;
+            font-size: 2rem;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .casinos-container .casino-card:nth-child(1),
+        .casinos-container .casino-card:nth-child(3) {
+            transform: translateY(10px);
         }
     </style>
 </head>
