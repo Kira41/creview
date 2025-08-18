@@ -14,12 +14,22 @@ try {
     $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
     $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : CASINOS_PER_PAGE;
 
+    // Sorting parameter
+    $sort = $_GET['sort'] ?? 'id';
+    $allowedSorts = [
+        'id' => 'id',
+        'rating' => 'rating DESC',
+        'name' => 'name',
+        'bonus' => 'bonus'
+    ];
+    $orderBy = $allowedSorts[$sort] ?? $allowedSorts['id'];
+
     // Fetch total active casinos count
     $countStmt = $db->query("SELECT COUNT(*) FROM casinos WHERE status = 'active'");
     $totalCount = (int) $countStmt->fetchColumn();
 
     // Fetch active casinos with pagination
-    $casinoStmt = $db->prepare("SELECT id, name, casino_type AS type, rating, bonus, features, description, logo, payment_methods FROM casinos WHERE status = 'active' ORDER BY id LIMIT :limit OFFSET :offset");
+    $casinoStmt = $db->prepare("SELECT id, name, casino_type AS type, rating, bonus, features, description, logo, payment_methods FROM casinos WHERE status = 'active' ORDER BY $orderBy LIMIT :limit OFFSET :offset");
     $casinoStmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $casinoStmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $casinoStmt->execute();

@@ -260,12 +260,13 @@ function loadMoreCasinos() {
     if (!container || !loadMoreBtn) return;
 
     const offset = container.children.length;
+    const sortParam = container.dataset.sort ? `&sort=${container.dataset.sort}` : '';
 
     // Show loading state
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}`)
+    fetch(`fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}${sortParam}`)
         .then(response => response.json())
         .then(data => {
             if (data.casinos && data.casinos.length > 0) {
@@ -300,11 +301,12 @@ function loadMoreGames() {
     if (!container || !loadMoreBtn) return;
 
     const offset = container.children.length;
+    const freeParam = container.dataset.free ? `&free=${container.dataset.free}` : '';
 
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`fetch_games.php?offset=${offset}&limit=${casinosPerPage}`)
+    fetch(`fetch_games.php?offset=${offset}&limit=${casinosPerPage}${freeParam}`)
         .then(response => response.json())
         .then(data => {
             if (data.games && data.games.length > 0) {
@@ -536,7 +538,8 @@ function initPHPIntegration() {
     // Fetch casino data when container exists
     const casinoContainer = document.getElementById('casinos-container');
     if (casinoContainer) {
-        fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}`)
+        const sortParam = casinoContainer.dataset.sort ? `&sort=${casinoContainer.dataset.sort}` : '';
+        fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}${sortParam}`)
             .then(response => response.json())
             .then(data => {
                 if (data.perPage) {
@@ -569,7 +572,8 @@ function initPHPIntegration() {
     // Fetch games list when container exists
     const gamesContainer = document.getElementById('games-container');
     if (gamesContainer) {
-        fetch(`fetch_games.php?offset=0&limit=${casinosPerPage}`)
+        const freeParam = gamesContainer.dataset.free ? `&free=${gamesContainer.dataset.free}` : '';
+        fetch(`fetch_games.php?offset=0&limit=${casinosPerPage}${freeParam}`)
             .then(response => response.json())
             .then(data => {
                 if (data.perPage) {
