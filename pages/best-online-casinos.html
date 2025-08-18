@@ -3,10 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Casino Games - CasinoReviews</title>
-    <meta name="description" content="Play casino games for free with no risk.">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Best Online Casinos - CasinoReviews</title>
+    <meta name="description" content="Top rated online casinos selected by our experts.">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .rank-podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .rank-podium .first {
+            font-size: 2rem;
+            color: gold;
+            transform: translateY(-10px);
+        }
+        .rank-podium .second {
+            font-size: 1.5rem;
+            color: silver;
+            transform: translateY(5px);
+        }
+        .rank-podium .third {
+            font-size: 1.25rem;
+            color: #cd7f32;
+            transform: translateY(10px);
+        }
+
+        .casinos-container {
+            position: relative;
+        }
+
+        .casinos-container .casino-card {
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .casinos-container .casino-card:nth-child(2) {
+            transform: translateY(-15px);
+        }
+
+        .casinos-container .casino-card:nth-child(2)::before {
+            content: "\f005";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: gold;
+            font-size: 2rem;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .casinos-container .casino-card:nth-child(1),
+        .casinos-container .casino-card:nth-child(3) {
+            transform: translateY(10px);
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -14,7 +68,7 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <a href="index.html">
+                    <a href="../index.html">
                         <i class="fas fa-dice"></i>
                         <span>CasinoReviews</span>
                     </a>
@@ -37,7 +91,7 @@
                         <a href="best-online-casinos.html" class="nav-link">Best Online Casinos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="admin/" class="nav-link admin-link">Admin</a>
+                        <a href="../admin/" class="nav-link admin-link">Admin</a>
                     </li>
                 </ul>
 
@@ -54,23 +108,28 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Free Casino Games</h1>
+                <h1 class="hero-title">Best Online Casinos</h1>
                 <p class="hero-description">
-                    Enjoy these games for free with no deposit required.
+                    Discover the top 3 online casinos based on our expert ratings.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Games Grid -->
+    <!-- Casino Grid -->
     <section class="casino-grid">
         <div class="container">
             <div class="grid-header">
-                <h2>Free to Play</h2>
-                <p>Try these games at no cost.</p>
+                <h2>Top 3 Casinos</h2>
+                <p>Our highest rated online casinos.</p>
+                <div class="rank-podium">
+                    <i class="fas fa-star second" aria-label="Second place"></i>
+                    <i class="fas fa-star first" aria-label="First place"></i>
+                    <i class="fas fa-star third" aria-label="Third place"></i>
+                </div>
             </div>
-            <div class="casinos-container" id="games-container" data-free="1">
-                <!-- Game cards will be loaded here -->
+            <div class="casinos-container" id="casinos-container" data-sort="rating">
+                <!-- Casino cards will be loaded here -->
             </div>
         </div>
     </section>
@@ -125,6 +184,6 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ mysql -u your_username -p casino_reviews < database_schema.sql
 ```
 
 ### Step 2: Configure Database Connection
-Edit `includes/config.php`:
+Edit `php/includes/config.php`:
 ```php
 define('DB_HOST', 'localhost');        // Your database host
 define('DB_NAME', 'casino_reviews');   // Your database name
@@ -24,8 +24,8 @@ define('DB_PASS', 'your_password');    // Your database password
 2. Add this at the top of `index.php`:
 ```php
 <?php
-require_once 'includes/config.php';
-require_once 'includes/casino-card.php';
+require_once 'php/includes/config.php';
+require_once 'php/includes/casino-card.php';
 ?>
 ```
 
@@ -84,10 +84,10 @@ $casinoId = addCasino($casinoData);
 ### Adding New Filter Options
 1. Update the HTML select options in `index.php`
 2. Modify the `applyFilters()` function in `js/main.js`
-3. Update the `getCasinos()` function in `includes/casino-card.php`
+3. Update the `getCasinos()` function in `php/includes/casino-card.php`
 
 ### Modifying Casino Card Layout
-Edit the `renderCasinoCard()` function in `includes/casino-card.php`:
+Edit the `renderCasinoCard()` function in `php/includes/casino-card.php`:
 ```php
 function renderCasinoCard($casino) {
     // Customize the HTML structure here
@@ -101,7 +101,7 @@ function renderCasinoCard($casino) {
 ## 🎯 AJAX Functionality
 
 ### Load More Casinos
-The frontend automatically handles "Load More" functionality. The AJAX endpoint is already configured in `includes/casino-card.php`.
+The frontend automatically handles "Load More" functionality. The AJAX endpoint is already configured in `php/includes/casino-card.php`.
 
 ### Real-time Filtering
 Filters work in real-time. To enable server-side filtering:
@@ -184,7 +184,7 @@ Update CSS variables in `css/style.css`:
 
 ### Logo and Branding
 1. Replace the logo in the header
-2. Update the site name in `includes/config.php`
+2. Update the site name in `php/includes/config.php`
 3. Modify the favicon and meta tags
 
 ## 📈 Performance Optimization

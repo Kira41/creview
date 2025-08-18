@@ -266,7 +266,7 @@ function loadMoreCasinos() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}${sortParam}`)
+    fetch(`/php/fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}${sortParam}`)
         .then(response => response.json())
         .then(data => {
             if (data.casinos && data.casinos.length > 0) {
@@ -306,7 +306,7 @@ function loadMoreGames() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`fetch_games.php?offset=${offset}&limit=${casinosPerPage}${freeParam}`)
+    fetch(`/php/fetch_games.php?offset=${offset}&limit=${casinosPerPage}${freeParam}`)
         .then(response => response.json())
         .then(data => {
             if (data.games && data.games.length > 0) {
@@ -344,7 +344,7 @@ function loadMoreBonuses() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`fetch_bonuses.php?offset=${offset}&limit=${casinosPerPage}`)
+    fetch(`/php/fetch_bonuses.php?offset=${offset}&limit=${casinosPerPage}`)
         .then(response => response.json())
         .then(data => {
             if (data.bonuses && data.bonuses.length > 0) {
@@ -539,7 +539,7 @@ function initPHPIntegration() {
     const casinoContainer = document.getElementById('casinos-container');
     if (casinoContainer) {
         const sortParam = casinoContainer.dataset.sort ? `&sort=${casinoContainer.dataset.sort}` : '';
-        fetch(`fetch_casinos.php?offset=0&limit=${casinosPerPage}${sortParam}`)
+        fetch(`/php/fetch_casinos.php?offset=0&limit=${casinosPerPage}${sortParam}`)
             .then(response => response.json())
             .then(data => {
                 if (data.perPage) {
@@ -556,7 +556,7 @@ function initPHPIntegration() {
     // Fetch bonuses data when container exists
     const bonusContainer = document.getElementById('bonuses-container');
     if (bonusContainer) {
-        fetch(`fetch_bonuses.php?offset=0&limit=${casinosPerPage}`)
+        fetch(`/php/fetch_bonuses.php?offset=0&limit=${casinosPerPage}`)
             .then(response => response.json())
             .then(data => {
                 if (data.perPage) {
@@ -573,7 +573,7 @@ function initPHPIntegration() {
     const gamesContainer = document.getElementById('games-container');
     if (gamesContainer) {
         const freeParam = gamesContainer.dataset.free ? `&free=${gamesContainer.dataset.free}` : '';
-        fetch(`fetch_games.php?offset=0&limit=${casinosPerPage}${freeParam}`)
+        fetch(`/php/fetch_games.php?offset=0&limit=${casinosPerPage}${freeParam}`)
             .then(response => response.json())
             .then(data => {
                 if (data.perPage) {
