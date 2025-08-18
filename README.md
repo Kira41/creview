@@ -25,21 +25,18 @@ A comprehensive, responsive frontend for casino review websites with PHP integra
 ```
 casino-review-frontend/
 ├── index.html              # Main homepage
-├── casino-detail.html      # Individual casino review page
+├── pages/                  # Additional static pages
 ├── css/
-│   ├── style.css          # Main stylesheet
-│   └── admin.css          # Admin panel styles
+│   └── style.css          # Main stylesheet
 ├── js/
-│   ├── main.js            # Frontend JavaScript functionality
-│   └── admin.js           # Admin panel JavaScript
-├── images/                # Image assets directory
-├── includes/              # PHP include files
-│   ├── config.php         # Database configuration and utilities
-│   ├── casino-card.php    # Casino card component and functions
-│   ├── header.php         # Site header component
-│   └── footer.php         # Site footer component
-├── admin/
-│   └── index.html         # Admin panel interface
+│   └── main.js            # Frontend JavaScript functionality
+├── php/                   # PHP endpoints and includes
+│   ├── fetch_casinos.php
+│   ├── fetch_games.php
+│   ├── fetch_bonuses.php
+│   └── includes/          # Reusable PHP components
+│       ├── config.php
+│       └── casino-card.php
 └── README.md              # This documentation file
 ```
 
@@ -74,7 +71,7 @@ CREATE TABLE casinos (
 ```
 
 #### Configuration
-1. Edit `includes/config.php` with your database credentials:
+1. Edit `php/includes/config.php` with your database credentials:
 ```php
 define('DB_HOST', 'your_host');
 define('DB_NAME', 'casino_reviews');
@@ -87,8 +84,8 @@ define('DB_PASS', 'your_password');
 2. Add PHP includes at the top:
 ```php
 <?php
-require_once 'includes/config.php';
-require_once 'includes/casino-card.php';
+require_once 'php/includes/config.php';
+require_once 'php/includes/casino-card.php';
 ?>
 ```
 
@@ -206,7 +203,7 @@ Get CSS class based on rating value.
 ## 🎯 AJAX Endpoints
 
 ### Load More Casinos
-**Endpoint:** `includes/casino-card.php?action=load_more`
+**Endpoint:** `php/includes/casino-card.php?action=load_more`
 
 **Parameters:**
 - `page` (int): Page number
@@ -224,7 +221,7 @@ Get CSS class based on rating value.
 ```
 
 ### Filter Casinos
-**Endpoint:** `includes/casino-card.php?action=filter`
+**Endpoint:** `php/includes/casino-card.php?action=filter`
 
 **Parameters:**
 - `sort` (string): Sort criteria
