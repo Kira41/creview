@@ -281,7 +281,8 @@ function loadMoreCasinos() {
                 loadMoreBtn.disabled = false;
             } else {
                 showAlert('No more casinos to load.');
-                loadMoreBtn.style.display = 'none';
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Casinos';
+                loadMoreBtn.disabled = false;
             }
         })
         .catch(error => {
@@ -318,7 +319,8 @@ function loadMoreGames() {
                 loadMoreBtn.disabled = false;
             } else {
                 showAlert('No more games to load.');
-                loadMoreBtn.style.display = 'none';
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Games';
+                loadMoreBtn.disabled = false;
             }
         })
         .catch(error => {
@@ -355,7 +357,8 @@ function loadMoreBonuses() {
                 loadMoreBtn.disabled = false;
             } else {
                 showAlert('No more bonuses to load.');
-                loadMoreBtn.style.display = 'none';
+                loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Bonuses';
+                loadMoreBtn.disabled = false;
             }
         })
         .catch(error => {
