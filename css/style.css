@@ -169,10 +169,10 @@ body {
 }
 
 .filter-container {
-    display: flex;
-    gap: 2rem;
+    display: grid;
+    gap: 1rem;
     align-items: center;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .filter-group {
@@ -202,7 +202,7 @@ body {
 
 .search-group {
     display: flex;
-    margin-left: auto;
+    justify-self: end;
 }
 
 .search-input {

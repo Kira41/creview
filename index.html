@@ -79,7 +79,7 @@
         <div class="container">
             <div class="filter-container">
                 <div class="filter-group">
-                    <label for="sort-select">Sort by:</label>
+                    <label for="sort-select">Filter</label>
                     <select id="sort-select" class="filter-select">
                         <option value="rating">Highest Rated</option>
                         <option value="newest">Newest Reviews</option>
@@ -89,8 +89,7 @@
                 </div>
 
                 <div class="filter-group">
-                    <label for="rating-filter">Minimum Rating:</label>
-                    <select id="rating-filter" class="filter-select">
+                    <select id="rating-filter" class="filter-select" aria-label="Minimum Rating">
                         <option value="0">All Ratings</option>
                         <option value="4.5">4.5+ Stars</option>
                         <option value="4.0">4.0+ Stars</option>
@@ -99,8 +98,7 @@
                 </div>
 
                 <div class="filter-group">
-                    <label for="type-filter">Casino Type:</label>
-                    <select id="type-filter" class="filter-select">
+                    <select id="type-filter" class="filter-select" aria-label="Casino Type">
                         <option value="all">All Types</option>
                         <option value="online">Online Casino</option>
                         <option value="sweepstakes">Sweepstakes</option>
@@ -109,8 +107,7 @@
                 </div>
 
                 <div class="filter-group">
-                    <label for="payment-filter">Payment Method:</label>
-                    <select id="payment-filter" class="filter-select">
+                    <select id="payment-filter" class="filter-select" aria-label="Payment Method">
                         <option value="all">All Payment Methods</option>
                         <option value="best-payment-methods">Best casino payment methods</option>
                         <option value="paypal">PayPal casinos</option>
@@ -122,7 +119,7 @@
                         <option value="apple-pay">Apple Pay casinos</option>
                     </select>
                 </div>
-                
+
                 <div class="search-group">
                     <input type="text" id="search-input" placeholder="Search casinos..." class="search-input">
                     <button class="search-btn">
