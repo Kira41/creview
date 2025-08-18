@@ -7,6 +7,27 @@
     <meta name="description" content="Top rated online casinos selected by our experts.">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .rank-podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .rank-podium .first {
+            font-size: 2rem;
+            color: gold;
+        }
+        .rank-podium .second {
+            font-size: 1.5rem;
+            color: silver;
+        }
+        .rank-podium .third {
+            font-size: 1.25rem;
+            color: #cd7f32;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -68,6 +89,11 @@
             <div class="grid-header">
                 <h2>Top 3 Casinos</h2>
                 <p>Our highest rated online casinos.</p>
+                <div class="rank-podium">
+                    <i class="fas fa-star second" aria-label="Second place"></i>
+                    <i class="fas fa-star first" aria-label="First place"></i>
+                    <i class="fas fa-star third" aria-label="Third place"></i>
+                </div>
             </div>
             <div class="casinos-container" id="casinos-container" data-sort="rating">
                 <!-- Casino cards will be loaded here -->
