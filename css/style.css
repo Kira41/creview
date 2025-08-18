@@ -168,17 +168,19 @@ body {
     border-bottom: 1px solid #e9ecef;
 }
 
+
 .filter-container {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .filter-group {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 200px;
 }
 
 .filter-group label {
@@ -193,6 +195,7 @@ body {
     background: white;
     font-size: 0.9rem;
     transition: border-color 0.3s ease;
+    width: 100%;
 }
 
 .filter-select:focus {
@@ -202,7 +205,7 @@ body {
 
 .search-group {
     display: flex;
-    justify-self: end;
+    margin-left: auto;
 }
 
 .search-input {
@@ -595,6 +598,7 @@ body {
     }
 
     .filter-container {
+        display: flex;
         flex-direction: column;
         align-items: stretch;
     }
@@ -602,6 +606,7 @@ body {
     .search-group {
         margin-left: 0;
         margin-top: 1rem;
+        width: 100%;
     }
 
     .search-input {
