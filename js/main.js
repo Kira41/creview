@@ -266,8 +266,7 @@ function loadMoreCasinos() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`/php/fetch_casinos.php?offset=${offset}&limit=${casinosPerPage}${sortParam}`)
-        .then(response => response.json())
+    fetchJson(`${getPhpPath('fetch_casinos.php')}?offset=${offset}&limit=${casinosPerPage}${sortParam}`)
         .then(data => {
             if (data.casinos && data.casinos.length > 0) {
                 data.casinos.forEach(casino => {
@@ -306,8 +305,7 @@ function loadMoreGames() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`/php/fetch_games.php?offset=${offset}&limit=${casinosPerPage}${freeParam}`)
-        .then(response => response.json())
+    fetchJson(`${getPhpPath('fetch_games.php')}?offset=${offset}&limit=${casinosPerPage}${freeParam}`)
         .then(data => {
             if (data.games && data.games.length > 0) {
                 data.games.forEach(game => {
@@ -344,8 +342,7 @@ function loadMoreBonuses() {
     loadMoreBtn.innerHTML = '<div class="spinner"></div> Loading...';
     loadMoreBtn.disabled = true;
 
-    fetch(`/php/fetch_bonuses.php?offset=${offset}&limit=${casinosPerPage}`)
-        .then(response => response.json())
+    fetchJson(`${getPhpPath('fetch_bonuses.php')}?offset=${offset}&limit=${casinosPerPage}`)
         .then(data => {
             if (data.bonuses && data.bonuses.length > 0) {
                 data.bonuses.forEach(bonus => {
@@ -539,8 +536,7 @@ function initPHPIntegration() {
     const casinoContainer = document.getElementById('casinos-container');
     if (casinoContainer) {
         const sortParam = casinoContainer.dataset.sort ? `&sort=${casinoContainer.dataset.sort}` : '';
-        fetch(`/php/fetch_casinos.php?offset=0&limit=${casinosPerPage}${sortParam}`)
-            .then(response => response.json())
+        fetchJson(`${getPhpPath('fetch_casinos.php')}?offset=0&limit=${casinosPerPage}${sortParam}`)
             .then(data => {
                 if (data.perPage) {
                     casinosPerPage = parseInt(data.perPage);
@@ -556,8 +552,7 @@ function initPHPIntegration() {
     // Fetch bonuses data when container exists
     const bonusContainer = document.getElementById('bonuses-container');
     if (bonusContainer) {
-        fetch(`/php/fetch_bonuses.php?offset=0&limit=${casinosPerPage}`)
-            .then(response => response.json())
+        fetchJson(`${getPhpPath('fetch_bonuses.php')}?offset=0&limit=${casinosPerPage}`)
             .then(data => {
                 if (data.perPage) {
                     casinosPerPage = parseInt(data.perPage);
@@ -573,8 +568,7 @@ function initPHPIntegration() {
     const gamesContainer = document.getElementById('games-container');
     if (gamesContainer) {
         const freeParam = gamesContainer.dataset.free ? `&free=${gamesContainer.dataset.free}` : '';
-        fetch(`/php/fetch_games.php?offset=0&limit=${casinosPerPage}${freeParam}`)
-            .then(response => response.json())
+        fetchJson(`${getPhpPath('fetch_games.php')}?offset=0&limit=${casinosPerPage}${freeParam}`)
             .then(data => {
                 if (data.perPage) {
                     casinosPerPage = parseInt(data.perPage);
@@ -690,32 +684,46 @@ function setupAjaxEndpoints() {
     // Set up fetch wrapper for PHP communication
     window.phpAjax = {
         get: function(endpoint, params = {}) {
-            const url = new URL(endpoint, window.location.origin);
+            const url = new URL(endpoint, window.location.href);
             Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
             
-            return fetch(url, {
+            return fetchJson(url.toString(), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 }
-            }).then(response => response.json());
+            });
         },
         
         post: function(endpoint, data = {}) {
-            return fetch(endpoint, {
+            return fetchJson(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify(data)
-            }).then(response => response.json());
+            });
         }
     };
 }
 
 // Utility Functions
+function fetchJson(url, options = {}) {
+    return fetch(url, options).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    });
+}
+
+function getPhpPath(file) {
+    const base = window.location.pathname.includes('/pages/') ? '../php/' : 'php/';
+    return base + file;
+}
+
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
