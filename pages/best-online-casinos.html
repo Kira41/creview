@@ -38,6 +38,7 @@
         .casinos-container .casino-card {
             position: relative;
             transition: transform 0.3s ease;
+            overflow: visible;
         }
 
         .casinos-container .casino-card:nth-child(2) {
@@ -51,14 +52,26 @@
             color: gold;
             font-size: 2rem;
             position: absolute;
-            top: -20px;
+            top: -32px;
             left: 50%;
             transform: translateX(-50%);
+            z-index: 1;
         }
 
         .casinos-container .casino-card:nth-child(1),
         .casinos-container .casino-card:nth-child(3) {
             transform: translateY(10px);
+        }
+
+        .ranking-criteria {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .ranking-criteria p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #555;
         }
     </style>
 </head>
@@ -93,6 +106,14 @@
             <div class="casinos-container" id="casinos-container" data-sort="rating">
                 <!-- Casino cards will be loaded here -->
             </div>
+        </div>
+    </section>
+
+    <!-- Ranking Criteria Section -->
+    <section class="ranking-criteria">
+        <div class="container">
+            <h2>How We Rank Casinos</h2>
+            <p>Our experts evaluate licensing, game fairness, bonuses, and player feedback to highlight the safest and most rewarding casinos.</p>
         </div>
     </section>
 
