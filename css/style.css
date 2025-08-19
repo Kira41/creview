@@ -174,6 +174,12 @@ body {
 }
 
 
+.filter-title {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
 .filter-container {
     display: flex;
     flex-wrap: wrap;
@@ -188,11 +194,6 @@ body {
     gap: 0.25rem;
     min-width: 200px;
     flex: 1 1 200px;
-}
-
-.filter-group label {
-    font-weight: 500;
-    color: #495057;
 }
 
 .filter-select {
@@ -212,6 +213,9 @@ body {
 
 .search-group {
     display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .search-input {
@@ -254,11 +258,13 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 3rem;
+    position: relative;
 }
 
 .grid-header-content {
     flex: 1;
     text-align: center;
+    width: 100%;
 }
 
 .grid-header-content h2 {
@@ -627,6 +633,7 @@ body {
         width: 100%;
         justify-content: center;
         margin: 0 0 1rem;
+        position: static;
     }
 
     .search-input {
@@ -903,11 +910,6 @@ body {
     flex: 1 1 200px;
 }
 
-.filter-group label {
-    font-weight: 500;
-    color: #495057;
-}
-
 .filter-select {
     padding: 0.5rem 1rem;
     border: 2px solid #e9ecef;
@@ -925,6 +927,9 @@ body {
 
 .search-group {
     display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .search-input {
@@ -967,11 +972,13 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 3rem;
+    position: relative;
 }
 
 .grid-header-content {
     flex: 1;
     text-align: center;
+    width: 100%;
 }
 
 .grid-header-content h2 {
@@ -1340,6 +1347,7 @@ body {
         width: 100%;
         justify-content: center;
         margin: 0 0 1rem;
+        position: static;
     }
 
     .search-input {
