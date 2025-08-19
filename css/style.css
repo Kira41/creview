@@ -179,6 +179,7 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .filter-group {
@@ -186,6 +187,7 @@ body {
     flex-direction: column;
     gap: 0.25rem;
     min-width: 200px;
+    flex: 1 1 200px;
 }
 
 .filter-group label {
@@ -210,7 +212,6 @@ body {
 
 .search-group {
     display: flex;
-    margin-left: auto;
 }
 
 .search-input {
@@ -247,17 +248,26 @@ body {
 }
 
 .grid-header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 3rem;
 }
 
-.grid-header h2 {
+.grid-header-content {
+    flex: 1;
+    text-align: center;
+}
+
+.grid-header-content h2 {
     font-size: 2.5rem;
     color: #333;
     margin-bottom: 1rem;
 }
 
-.grid-header p {
+.grid-header-content p {
     font-size: 1.1rem;
     color: #666;
     max-width: 600px;
@@ -603,15 +613,20 @@ body {
     }
 
     .filter-container {
-        display: flex;
         flex-direction: column;
         align-items: stretch;
     }
 
+    .grid-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .search-group {
-        margin-left: 0;
-        margin-top: 1rem;
         width: 100%;
+        justify-content: center;
+        margin: 0 0 1rem;
     }
 
     .search-input {
@@ -877,6 +892,7 @@ body {
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .filter-group {
@@ -884,6 +900,7 @@ body {
     flex-direction: column;
     gap: 0.25rem;
     min-width: 200px;
+    flex: 1 1 200px;
 }
 
 .filter-group label {
@@ -908,7 +925,6 @@ body {
 
 .search-group {
     display: flex;
-    margin-left: auto;
 }
 
 .search-input {
@@ -945,17 +961,26 @@ body {
 }
 
 .grid-header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 3rem;
 }
 
-.grid-header h2 {
+.grid-header-content {
+    flex: 1;
+    text-align: center;
+}
+
+.grid-header-content h2 {
     font-size: 2.5rem;
     color: #333;
     margin-bottom: 1rem;
 }
 
-.grid-header p {
+.grid-header-content p {
     font-size: 1.1rem;
     color: #666;
     max-width: 600px;
@@ -1301,15 +1326,20 @@ body {
     }
 
     .filter-container {
-        display: flex;
         flex-direction: column;
         align-items: stretch;
     }
 
+    .grid-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .search-group {
-        margin-left: 0;
-        margin-top: 1rem;
         width: 100%;
+        justify-content: center;
+        margin: 0 0 1rem;
     }
 
     .search-input {
