@@ -350,8 +350,13 @@ function initSmoothScrolling() {
 
     links.forEach(link => {
         link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
+            // Extract the ID without the leading '#'
+            const targetId = this.getAttribute('href').slice(1);
+
+            // Skip empty or invalid targets to avoid querySelector errors
+            if (!targetId) return;
+
+            const targetElement = document.getElementById(targetId);
 
             if (targetElement) {
                 e.preventDefault();
